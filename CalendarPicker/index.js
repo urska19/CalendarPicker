@@ -56,6 +56,7 @@ export default class CalendarPicker extends Component {
       initialDate: date,
       currentMonth: parseInt(date.getMonth()),
       currentYear: parseInt(date.getFullYear()),
+      selectedStartDate: date,
       styles,
     });
   }
