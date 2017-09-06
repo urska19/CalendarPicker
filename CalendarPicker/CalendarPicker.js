@@ -137,9 +137,10 @@ var Days = React.createClass({
 
   componentDidMount() {
     if(this.props.fromDate && this.props.toDate)
-      this.updateSelectedStates(this.props.fromDate.getDate(), this.props.toDate.getDate());
+      this.updateSelectedStates(this.props.fromDate.getDate(), this.props.fromDate.getMonth(), this.props.fromDate.getFullYear(), this.props.month, this.props.year,
+                                this.props.toDate.getDate(), this.props.toDate.getMonth(), this.props.toDate.getFullYear());
     else
-      this.updateSelectedStates(this.props.date.getDate(), null, this.props.date.getMonth(), this.props.date.getFullYear(), this.props.month, this.props.year);
+      this.updateSelectedStates(this.props.date.getDate(), this.props.date.getMonth(), this.props.date.getFullYear(), this.props.month, this.props.year);
   },
 
   // Trigger date change if new props are provided.
@@ -147,28 +148,29 @@ var Days = React.createClass({
   //
   componentWillReceiveProps: function(newProps) {
     if(newProps.fromDate && newProps.toDate)
-      this.updateSelectedStates(newProps.fromDate.getDate(), newProps.toDate.getDate());
+      this.updateSelectedStates(newProps.fromDate.getDate(), newProps.fromDate.getMonth(), newProps.fromDate.getFullYear(), newProps.month, newProps.year,
+                                newProps.toDate.getDate(), newProps.toDate.getMonth(), newProps.toDate.getFullYear());
     else{
-      this.updateSelectedStates(newProps.date.getDate(), null, newProps.date.getMonth(), newProps.date.getFullYear(), newProps.month, newProps.year); }
+      this.updateSelectedStates(newProps.date.getDate(), newProps.date.getMonth(), newProps.date.getFullYear(), newProps.month, newProps.year); }
   },
 
-  updateSelectedStates(dayStart, dayEnd, month, year, currentMonth, currentYear) {
+  updateSelectedStates(dayStart, dayStartMonth, dayStartYear, currentMonth, currentYear, dayEnd, dayEndMonth, dayEndYear) {
     var selectedStates = [],
       selectedTypes = [],
       daysInMonth = getDaysInMonth(currentMonth, currentYear),
       i;
 
     for (i = 1; i <= daysInMonth; i++) {
-      if (i === dayStart && ! dayEnd && month == currentMonth && year == currentYear) {
+      if ( ! dayEnd  && i === dayStart && dayStartMonth == currentMonth && dayStartYear == currentYear ) {
         selectedTypes.push('single');
         selectedStates.push(true);
-      } else if (i === dayStart && dayEnd ) {
+      } else if ( dayEnd && i === dayStart && dayStartMonth == currentMonth && dayStartYear == currentYear  ) {
         selectedTypes.push('start_range');
         selectedStates.push(true);
-      } else if (i === dayEnd && dayStart ) {
+      } else if ( dayStart && i === dayEnd && dayEndMonth == currentMonth && dayEndYear == currentYear ) {
         selectedTypes.push('end_range');
         selectedStates.push(true);
-      } else if (i > dayStart && i < dayEnd ) {
+      } else if ( dayStart && dayEnd && new Date(currentYear, currentMonth, i) > new Date(dayStartYear, dayStartMonth, dayStart) && new Date(currentYear, currentMonth, i) < new Date(dayEndYear, dayEndMonth, dayEnd) ) {
         selectedTypes.push('in_range');
         selectedStates.push(true);
       } else {
