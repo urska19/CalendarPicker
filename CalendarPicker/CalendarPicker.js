@@ -139,7 +139,7 @@ var Days = React.createClass({
     if(this.props.fromDate && this.props.toDate)
       this.updateSelectedStates(this.props.fromDate.getDate(), this.props.toDate.getDate());
     else
-      this.updateSelectedStates(this.props.date.getDate());
+      this.updateSelectedStates(this.props.date.getDate(), null, this.props.date.getMonth(), this.props.date.getFullYear(), this.props.month, this.props.year);
   },
 
   // Trigger date change if new props are provided.
@@ -148,18 +148,18 @@ var Days = React.createClass({
   componentWillReceiveProps: function(newProps) {
     if(newProps.fromDate && newProps.toDate)
       this.updateSelectedStates(newProps.fromDate.getDate(), newProps.toDate.getDate());
-    else
-      this.updateSelectedStates(newProps.date.getDate());
+    else{
+      this.updateSelectedStates(newProps.date.getDate(), null, newProps.date.getMonth(), newProps.date.getFullYear(), newProps.month, newProps.year); }
   },
 
-  updateSelectedStates(dayStart, dayEnd) {
+  updateSelectedStates(dayStart, dayEnd, month, year, currentMonth, currentYear) {
     var selectedStates = [],
       selectedTypes = [],
-      daysInMonth = getDaysInMonth(this.props.month, this.props.year),
+      daysInMonth = getDaysInMonth(currentMonth, currentYear),
       i;
 
     for (i = 1; i <= daysInMonth; i++) {
-      if (i === dayStart && ! dayEnd) {
+      if (i === dayStart && ! dayEnd && month == currentMonth && year == currentYear) {
         selectedTypes.push('single');
         selectedStates.push(true);
       } else if (i === dayStart && dayEnd ) {
