@@ -24,13 +24,14 @@ var {
 } = require('./Util');
 
 var makeStyles = require('./makeStyles');
+var createReactClass = require('create-react-class');
 
 //The styles in makeStyles are intially scaled to this width
 const IPHONE6_WIDTH = 375;
 var initialScale = Dimensions.get('window').width / IPHONE6_WIDTH ;
 var styles = StyleSheet.create(makeStyles(initialScale));
 
-var Day = React.createClass({
+var Day = createReactClass({
   propTypes: {
     date: React.PropTypes.instanceOf(Date),
     onDayChange: React.PropTypes.func,
@@ -114,7 +115,7 @@ var Day = React.createClass({
   }
 });
 
-var Days = React.createClass({
+var Days = createReactClass({
   propTypes: {
     maxDate: React.PropTypes.instanceOf(Date),
     minDate: React.PropTypes.instanceOf(Date),
@@ -249,7 +250,7 @@ var Days = React.createClass({
 
 });
 
-var WeekDaysLabels = React.createClass({
+var WeekDaysLabels = createReactClass({
   propTypes: {
     screenWidth: React.PropTypes.number,
     textStyle: Text.propTypes.style
@@ -267,7 +268,7 @@ var WeekDaysLabels = React.createClass({
   }
 });
 
-var HeaderControls = React.createClass({
+var HeaderControls = createReactClass({
   propTypes: {
     month: React.PropTypes.number.isRequired,
     year: React.PropTypes.number,
@@ -399,7 +400,7 @@ var HeaderControls = React.createClass({
   }
 });
 
-var CalendarPicker = React.createClass({
+var CalendarPicker = createReactClass({
   propTypes: {
     maxDate: React.PropTypes.instanceOf(Date),
     minDate: React.PropTypes.instanceOf(Date),

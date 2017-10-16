@@ -13,12 +13,12 @@ import {
   Text,
   View
 } from 'react-native';
-
+var createReactClass = require('create-react-class');
 var CalendarPicker = require('./CalendarPicker/CalendarPicker'),
   CalendarPicker2;
 
 
-CalendarPicker2 = React.createClass({
+CalendarPicker2 = createReactClass({
   getInitialState: function() {
     return {
       date: new Date(),
